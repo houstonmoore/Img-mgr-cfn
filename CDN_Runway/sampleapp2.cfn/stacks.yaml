@@ -1,0 +1,21 @@
+namespace: ${namespace}
+cfngin_bucket: ${cfngin_bucket_name}
+
+sys_path: ./
+
+stacks:
+ img-mgr:
+    template_path: templates/img-mgr.yaml  # also supports json templates
+    variables:
+      EnvironmentName: "production"
+      CustomerName: ${customer}
+      ApplicationName: "img-manager"
+      SshKey: ${ssh_key}
+      ImageID: ${ImageID}
+      VpcId: ${xref huey-common-VPC::VPC}
+      LoadBalancerSubnets: ${xref huey-common-VPC::PublicSubnet1}, ${xref huey-common-VPC::PublicSubnet2}
+      Subnets: ${xref huey-common-VPC::PrivateSubnet1}, ${xref huey-common-VPC::PrivateSubnet2}
+      AppServerMinCount: 2
+      AppServerMaxCount: 4
+      AvailabilityZones: ${AZs}
+      HealthCheckType: "ELB"
